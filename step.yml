@@ -49,12 +49,8 @@ run_if: ""
 
 deps:
   brew:
-  - name: git
+  - name: pipenv
   - name: wget
-  apt_get:
-  - name: git
-  - name: wget
-
 
 toolkit:
   bash:
@@ -66,14 +62,14 @@ inputs:
     opts:
       title: Service Account JSON key file path
       description: |-
-        Path to the service account's JSON key file. It must be a Secret Environment Variable, pointing to either a file uploaded to Bitrise or to a remote download location.
+        Path to the service account's JSON key file. It must be a Secret Environment Variable, pointing to either a file uploaded to Bitrise or to a remote download location. Either this or service_account_json_key_content
       is_required: false
       is_sensitive: false
   - service_account_json_key_content:
     opts:
       title: Service Account JSON key content
       description: |-
-        Content of a previously donwloaded service account's JSON key file. It must be a Secret Environment Variable, containing the data from the Google key file
+        Content of a previously donwloaded service account's JSON key file. It must be a Secret Environment Variable, containing the data from the Google key file. Either this or service_account_json_key_path needs to be provided
       is_required: false
       is_sensitive: true
   - package_name:
@@ -82,13 +78,3 @@ inputs:
       description: |-
         Package name of the app.
       is_required: true
-
-outputs:
-  - EXAMPLE_STEP_OUTPUT:
-    opts:
-      title: "Example Step Output"
-      summary: Summary. No more than 2-3 sentences.
-      description: |
-        Description of this output.
-
-        Can be Markdown formatted text.

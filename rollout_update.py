@@ -10,10 +10,11 @@ TRACK = (
     'production'
 )
 
+# To run: rollout_update package_name json_credentials_path
 def main():
   PACKAGE_NAME = sys.argv[1]
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    '/Users/agarcia/Downloads/Google Play Android Developer-53dbcb56fbbf.json',
+    sys.argv[2],
     scopes='https://www.googleapis.com/auth/androidpublisher')
 
   http = httplib2.Http()

@@ -6,9 +6,7 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from oauth2client.client import AccessTokenRefreshError
 
-TRACK = (
-    'production'
-)
+TRACK = ('production')
 
 # To run: rollout_update package_name json_credentials_path
 def main():
@@ -48,20 +46,24 @@ def main():
             elif rolloutPercentage < 0.5:
                 release['userFraction'] = 0.5
             elif rolloutPercentage < 1.0:
-                release['userFraction'] = 1.0
+                del release['userFraction']
                 release['status'] = 'completed'
             else:
                 print('Release already fully rolled out')
                 continue        
     if old_result != track_result:
-      print("Updating status: ", track_result)
-      service.edits().tracks().update(
-                  editId=edit_id,
-                  track=TRACK,
-                  packageName=PACKAGE_NAME,
-                  body=track_result).execute()
-      commit_request = service.edits().commit(editId=edit_id, packageName=PACKAGE_NAME).execute()
-      print('Edit ', commit_request['id'], ' has been committed')    
+        completed_releases = list(filter(lambda release: release['status'] == "completed", track_result['releases']))
+        if len(completed_releases) == 2:
+            track_result['releases'].remove(completed_releases[1])
+
+        print("Updating status: ", track_result)
+        service.edits().tracks().update(
+                    editId=edit_id,
+                    track=TRACK,
+                    packageName=PACKAGE_NAME,
+                    body=track_result).execute()
+        commit_request = service.edits().commit(editId=edit_id, packageName=PACKAGE_NAME).execute()
+        print('Edit ', commit_request['id'], ' has been committed')    
 
 
   except AccessTokenRefreshError:

@@ -8,7 +8,7 @@
 # - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
 
 title: |-
-  Google Play Rollout Update
+  Update Google Play Rollout
 summary: |
   This step connects to Google Play and check if there is a release in production with an in progress rollout. If found, it increases it to the next rollout percentage [2%, 5%, 10%, 20%, 50%, 100%]
 description: |
@@ -64,20 +64,20 @@ inputs:
   - service_account_json_key_path:
     opts:
       title: Service Account JSON key file path
-      description: |-
+      summary: |-
         Path to the service account's JSON key file. It must be a Secret Environment Variable, pointing to either a file uploaded to Bitrise or to a remote download location. Either this or service_account_json_key_content
       is_required: false
-      is_sensitive: false
+      is_sensitive: true
   - service_account_json_key_content:
     opts:
       title: Service Account JSON key content
-      description: |-
+      summary: |-
         Content of a previously donwloaded service account's JSON key file. It must be a Secret Environment Variable, containing the data from the Google key file. Either this or service_account_json_key_path needs to be provided
       is_required: false
       is_sensitive: true
   - package_name:
     opts:
       title: Package name
-      description: |-
+      summary: |-
         Package name of the app.
       is_required: true

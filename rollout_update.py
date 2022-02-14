@@ -35,6 +35,8 @@ def main():
             if rolloutPercentage == 0:
                 print('Release not rolled out yet')
                 continue
+            elif rolloutPercentage < 0.01:
+                release['userFraction'] = 0.01                         
             elif rolloutPercentage < 0.02:
                 release['userFraction'] = 0.02                         
             elif rolloutPercentage < 0.05:

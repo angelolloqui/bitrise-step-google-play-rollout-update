@@ -5,6 +5,7 @@ import httplib2
 from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from oauth2client.client import AccessTokenRefreshError
+from datetime import date
 
 TRACK = ('production')
 
@@ -35,7 +36,8 @@ def main():
             if rolloutPercentage == 0:
                 print('Release not rolled out yet')
                 continue
-            elif rolloutPercentage < 0.01:
+            # check rolloutPercentage and if today is monday (aka 0 of 6)
+            elif ((rolloutPercentage < 0.01) and (date.today().weekday() == 0)): 
                 release['userFraction'] = 0.01                         
             elif rolloutPercentage < 0.02:
                 release['userFraction'] = 0.02                         

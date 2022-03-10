@@ -10,9 +10,9 @@
 title: |-
   Update Google Play Rollout
 summary: |
-  This step connects to Google Play and check if there is a release in production with an in progress rollout. If found, it increases it to the next rollout percentage [2%, 5%, 10%, 20%, 50%, 100%]
+  This step connects to Google Play and check if there is a release with an in progress rollout. If found, it increases it to the next rollout percentage [2%, 5%, 10%, 20%, 50%, 100%]
 description: |
-  The step makes use of the python library and Edits Api from Google Play. It downloads the info from the production track, and looks if any release in there has a 'userFraction' property defined. In case it has, and it is between 0 and 1, then it just modifies it to the next step, or completes the release if next is 100%
+  The step makes use of the python library and Edits Api from Google Play. It downloads the info from the track, and looks if any release in there has a 'userFraction' property defined. In case it has, and it is between 0 and 1, then it just modifies it to the next step, or completes the release if next is 100%
 website: https://github.com/angelolloqui/bitrise-step-google-play-rollout-update
 source_code_url: https://github.com/angelolloqui/bitrise-step-google-play-rollout-update
 support_url: https://github.com/angelolloqui/bitrise-step-google-play-rollout-update/issues
@@ -80,4 +80,10 @@ inputs:
       title: Package name
       summary: |-
         Package name of the app.
+      is_required: true
+  - track:
+    opts:
+      title: Track name
+      summary: |-
+        Track name of the release.
       is_required: true

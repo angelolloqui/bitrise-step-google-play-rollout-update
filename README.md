@@ -1,6 +1,6 @@
 # Google Play Rollout Update
 
-The step makes use of the python library and Edits Api from Google Play. It downloads the info from the production track, and looks if any release in there has a 'userFraction' property defined. In case it has, and it is between 0 and 1, then it just modifies it to the next step, or completes the release if next is 100%
+The step makes use of the python library and Edits Api from Google Play. It downloads the info from the track, and looks if any release in there has a 'userFraction' property defined. In case it has, and it is between 0 and 1, then it just modifies it to the next step, or completes the release if next is 100%
 
 
 ## How to use this Step

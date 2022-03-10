@@ -10,7 +10,6 @@ from oauth2client.client import AccessTokenRefreshError
 def main():
   PACKAGE_NAME = sys.argv[1]
   TRACK = (sys.argv[3])
-  if variable is None else v
 
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
     sys.argv[2],

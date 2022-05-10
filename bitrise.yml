@@ -7,6 +7,7 @@ app:
   - PACKAGE_NAME: $PACKAGE_NAME
   # - JSON_KEY_PATH: $JSON_KEY_PATH
   - JSON_KEY_CONTENT: $JSON_KEY_CONTENT
+  - TRACK: "production"
   # If you want to share this step into a StepLib
   - BITRISE_STEP_ID: google-play-rollout-update
   - BITRISE_STEP_VERSION: "0.0.2"
@@ -39,6 +40,7 @@ workflows:
           - service_account_json_key_path: $JSON_KEY_PATH
           - service_account_json_key_content: $JSON_KEY_CONTENT
           - package_name: $PACKAGE_NAME        
+          - track: $TRACK
     - script:
         inputs:
         - content: |

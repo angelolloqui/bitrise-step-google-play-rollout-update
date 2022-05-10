@@ -6,11 +6,11 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from oauth2client.client import AccessTokenRefreshError
 
-TRACK = ('production')
-
 # To run: rollout_update package_name json_credentials_path
 def main():
   PACKAGE_NAME = sys.argv[1]
+  TRACK = (sys.argv[3])
+
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
     sys.argv[2],
     scopes='https://www.googleapis.com/auth/androidpublisher')

@@ -30,6 +30,9 @@ def main():
 
     print("Current status: ", track_result)
     for release in track_result['releases']:
+        if release['status'] == 'inProgress':
+            print('Release in review')
+            continue
         if 'userFraction' in release:
             rolloutPercentage = release['userFraction']
             if rolloutPercentage == 0:

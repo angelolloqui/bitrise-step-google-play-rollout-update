@@ -32,7 +32,7 @@ def main():
     for release in track_result['releases']:       
         if 'userFraction' in release:
             rolloutPercentage = release['userFraction']
-            if rolloutPercentage == 0:
+            if rolloutPercentage <= 0.0001:
                 print('Release not rolled out yet')
                 continue
             elif rolloutPercentage < 0.02:

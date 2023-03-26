@@ -87,3 +87,9 @@ inputs:
       summary: |-
         Track name of the release.
       is_required: true
+  - force_rollout:
+    opts:
+      title: Custom rollout value
+      summary: |-
+        If provided, the script will force this percentage instead of calculating the next step. It must be a number between (0..1), non inclusive
+      is_required: false

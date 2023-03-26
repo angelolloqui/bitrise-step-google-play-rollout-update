@@ -6,10 +6,11 @@ from apiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from oauth2client.client import AccessTokenRefreshError
 
-# To run: rollout_update package_name json_credentials_path
+# To run: rollout_update package_name json_credentials_path track force_user_fraction
 def main():
   PACKAGE_NAME = sys.argv[1]
-  TRACK = (sys.argv[3])
+  TRACK = sys.argv[3]
+  FORCE_USER_FRACTION = float(sys.argv[4] or "0")
 
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
     sys.argv[2],
@@ -32,25 +33,36 @@ def main():
     for release in track_result['releases']:       
         if 'userFraction' in release:
             rolloutPercentage = release['userFraction']
-            if rolloutPercentage <= 0.0001:
-                print('Release not rolled out yet')
-                continue
-            elif rolloutPercentage < 0.02:
-                release['userFraction'] = 0.02                         
-            elif rolloutPercentage < 0.05:
-                release['userFraction'] = 0.05
-            elif rolloutPercentage < 0.1:
-                release['userFraction'] = 0.1
-            elif rolloutPercentage < 0.2:
-                release['userFraction'] = 0.2
-            elif rolloutPercentage < 0.5:
-                release['userFraction'] = 0.5
-            elif rolloutPercentage < 1.0:
-                del release['userFraction']
-                release['status'] = 'completed'
+            if FORCE_USER_FRACTION > 0:
+                rolloutPercentage = FORCE_USER_FRACTION
+                print('Forcing rollout to', rolloutPercentage)
+            else:                
+                if rolloutPercentage <= 0.0001:
+                    print('Release not rolled out yet')
+                    continue
+                elif rolloutPercentage < 0.02:
+                    rolloutPercentage = 0.02                         
+                elif rolloutPercentage < 0.05:
+                    rolloutPercentage = 0.05
+                elif rolloutPercentage < 0.1:
+                    rolloutPercentage = 0.1
+                elif rolloutPercentage < 0.2:
+                    rolloutPercentage = 0.2
+                elif rolloutPercentage < 0.5:
+                    rolloutPercentage = 0.5
+                elif rolloutPercentage < 1.0:
+                    rolloutPercentage = 1.0
+                else:
+                    print('Release already fully rolled out')
+                    continue                
+            if rolloutPercentage < 1:
+                print('Updating rollout to', rolloutPercentage)
+                release['userFraction'] = rolloutPercentage
             else:
-                print('Release already fully rolled out')
-                continue        
+                print('Marking rollout completed', rolloutPercentage)
+                del release['userFraction']
+                release['status'] = 'completed'            
+
     if old_result != track_result:
         completed_releases = list(filter(lambda release: release['status'] == "completed", track_result['releases']))
         if len(completed_releases) == 2:
@@ -65,7 +77,7 @@ def main():
         commit_request = service.edits().commit(editId=edit_id, packageName=PACKAGE_NAME).execute()
         print('✅ Edit ', commit_request['id'], ' has been committed')    
     else:
-        print('✅ No rollout update needed, already in 100%')
+        print('✅ No rollout update needed')
 
 
   except AccessTokenRefreshError:

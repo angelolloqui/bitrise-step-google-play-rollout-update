@@ -40,7 +40,8 @@ workflows:
           - service_account_json_key_path: $JSON_KEY_PATH
           - service_account_json_key_content: $JSON_KEY_CONTENT
           - package_name: $PACKAGE_NAME        
-          - track: $TRACK
+          - track: production
+          #- force_rollout: 0.000001
     - script:
         inputs:
         - content: |

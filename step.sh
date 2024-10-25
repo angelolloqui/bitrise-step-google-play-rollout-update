@@ -12,10 +12,7 @@ else
     echo "$service_account_json_key_content" > "${SCRIPT_DIR}/credentials.json"
 fi
 echo "Installing python dependencies"
-pipenv install pyparsing==3.1.4
-pipenv install google-api-python-client==2.86.0
-pipenv install oauth2client
-pipenv install urllib3
+pipenv install urllib3 pyparsing==3.1.4 oauth2client google-api-python-client==2.86.0
 
 echo "Running: ${SCRIPT_DIR}/rollout_update.py ${package_name} ${SCRIPT_DIR}/credentials.json ${track} ${force_rollout}"
 pipenv run python "${SCRIPT_DIR}/rollout_update.py" "${package_name}" "${SCRIPT_DIR}/credentials.json" "${track}" "${force_rollout}"

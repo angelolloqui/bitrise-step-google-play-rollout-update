@@ -11,7 +11,7 @@ else
     echo "Using local content credentials"
     echo "$service_account_json_key_content" > "${SCRIPT_DIR}/credentials.json"
 fi
-
+echo "Installing python dependencies"
 pipenv install pyparsing==3.1.4
 pipenv install google-api-python-client==2.86.0
 pipenv install oauth2client

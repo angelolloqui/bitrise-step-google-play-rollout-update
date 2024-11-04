@@ -49,10 +49,8 @@ run_if: ""
 
 deps:
   brew:
-  - name: pipenv
   - name: wget
   apt_get:
-  - name: pipenv
   - name: wget
   
 toolkit:

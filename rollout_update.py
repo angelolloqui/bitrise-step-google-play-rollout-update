@@ -74,7 +74,7 @@ def main():
                     track=TRACK,
                     packageName=PACKAGE_NAME,
                     body=track_result).execute()
-        commit_request = service.edits().commit(editId=edit_id, packageName=PACKAGE_NAME).execute()
+        commit_request = service.edits().commit(editId=edit_id, packageName=PACKAGE_NAME, changesNotSentForReview=False).execute()
         print('✅ Edit ', commit_request['id'], ' has been committed')    
     else:
         print('✅ No rollout update needed')
